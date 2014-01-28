@@ -11,14 +11,16 @@
 # and related or neighboring rights to the source code in this file.
 # http://creativecommons.org/publicdomain/zero/1.0/
 
+import sys, os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/..')
 import Keccak
-import os
 
 ## Iterate through the files 'Short... and LongMsgKAT_XXX.txt' containing the
 ## test vectors and compare the computed values to the provided ones
 ## In case of difference, it stops the processing and print a message
 
-dirTestVector=os.path.abspath(os.path.join('.'))
+#dirTestVector=os.path.abspath(os.path.join('.'))
+dirTestVector = os.path.dirname(os.path.realpath(__file__))
 verbose=False
 instances=[
 #    ['r40c160', 40, 160, 0],

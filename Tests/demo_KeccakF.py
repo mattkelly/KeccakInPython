@@ -11,6 +11,8 @@
 # and related or neighboring rights to the source code in this file.
 # http://creativecommons.org/publicdomain/zero/1.0/
 
+import sys, os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/..')
 import Keccak
 
 A=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]

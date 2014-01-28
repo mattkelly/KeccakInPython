@@ -1,3 +1,14 @@
+# ----------------------
+# Project specific 
+# ----------------------
+
+# Ignore KAT inputs and outputs
+Tests/*.txt
+
+# ----------------------
+# Generic Python stuff
+# ----------------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

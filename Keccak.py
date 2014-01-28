@@ -145,7 +145,7 @@ class Keccak:
         if self.w%8!= 0:
             raise KeccakError("w is not a multiple of 8")
         if len(string)!=2*(self.b)//8:
-            raise KeccakError.KeccakError("string can't be divided in 25 blocks of w bits\
+            raise KeccakError.KeccakError("String can't be divided in 25 blocks of w bits\
             i.e. string must have exactly b bits")
 
         #Convert
@@ -167,7 +167,7 @@ class Keccak:
         if self.w%8!= 0:
             raise KeccakError.KeccakError("w is not a multiple of 8")
         if (len(table)!=5) or (False in [len(row)==5 for row in table]):
-            raise KeccakError.KeccakError("table must be 5×5")
+            raise KeccakError.KeccakError("Table must be 5×5")
 
         #Convert
         output=['']*25
