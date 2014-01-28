@@ -234,7 +234,7 @@ class Keccak:
             A = self.Round(A,self.RC[i]%(1<<self.w))
 
             if verbose:
-                  self.printState(A,"Satus end of round #%d/%d" % (i+1,self.nr))
+                  self.printState(A,"Status end of round #%d/%d" % (i+1,self.nr))
 
         return A
 

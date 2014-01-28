@@ -32,14 +32,14 @@ Current value of state: Before first round
 	['0x0', '0x0', '0x0', '0x0', '0x0']
 	['0x0', '0x0', '0x8000000000000000', '0x0', '0x0']
 	['0x0', '0x0', '0x0', '0x0', '0x0']
-Current value of state: Satus end of round #1/24
+Current value of state: Status end of round #1/24
 	['0xdc77ae5456dd06dd', '0x2110377665444332', '0x7e6e5e6e7e6e5e6e', '0x8019e64c44470000', '0xba208b329807a91']
 	['0x5669988982a11005', '0xa8864666600eeaaa', '0xe3304ddaaffcc99e', '0x42206eecc2a88664', '0xb77bbffbb77bbffb']
 	['0x1111111110111117', '0x371dfb48ae8462d1', '0x224555108b45ff10', '0xddba8867553200ef', '0x4c3bf7a26e19d5e']
 	['0xcb3621d00772611c', '0x13f17c0eb95b8bb5', '0x985510cc88440ddd', '0x2cd47cc54bb25aa3', '0x35c1100ff8899883']
 	['0x5deab70448bfe251', '0x88a62388992232cc', '0x7788547722dd0032', '0x8804819c9915908c', '0xdd995510cc88440d']
 <...>
-Current value of state: Satus end of round #24/24
+Current value of state: Status end of round #24/24
 	['0xd89c919ce8078903', '0x92ff885abc7f0af9', '0xa0cdebf3ae8d1078', '0xde568902e183b3ce', '0xe3d1096857dc5b35']
 	['0xc5f432f2633d3da0', '0x6a0094e2d96f8f35', '0xff92be8c648edc5a', '0xb87fe7012b84523a', '0xb8b7e144e77b3096']
 	['0xf4832b396a99f318', '0xd8c10bcbaed2e2cf', '0x7d0f5ff34fc95a2e', '0x404281a6b9b3c2a2', '0xa758a863c74aecbe']
@@ -67,14 +67,14 @@ Current value of state: Before first round
         ['0x0', '0x0', '0x0', '0x0', '0x0']
         ['0x0', '0x0', '0x0', '0x0', '0x0']
         ['0x0', '0x0', '0x0', '0x0', '0x0']
-Current value of state: Satus end of round #1/24
+Current value of state: Status end of round #1/24
         ['0x1L', '0x0L', '0x0L', '0x0L', '0x0L']
         ['0x0L', '0x0L', '0x0L', '0x0L', '0x0L']
         ['0x0L', '0x0L', '0x0L', '0x0L', '0x0L']
         ['0x0L', '0x0L', '0x0L', '0x0L', '0x0L']
         ['0x0L', '0x0L', '0x0L', '0x0L', '0x0L']
 <...>
-Current value of state: Satus end of round #24/24
+Current value of state: Status end of round #24/24
         ['0xf1258f7940e1dde7L', '0x84d5ccf933c0478aL', '0xd598261ea65aa9eeL', '0xbd1547306f80494dL', '0x8b284e056253d057L']
         ['0xff97a42d7f8e6fd4L', '0x90fee5a0a44647c4L', '0x8c5bda0cd6192e76L', '0xad30a6f71b19059cL', '0x30935ab7d08ffc64L']
         ['0xeb5aa93f2317d635L', '0xa9a6e6260d712103L', '0x81a57c16dbcf555fL', '0x43b831cd0347c826L', '0x1f22f1a11a5569fL']
