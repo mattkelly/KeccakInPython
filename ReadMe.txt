@@ -1,7 +1,7 @@
 Notes
 -------
 
-The original code for this was taken form http://keccak.noekeon.org/
+The original code for this was taken from http://keccak.noekeon.org/
 
 The goal of this modified version is to match the software interface specified here:
 
