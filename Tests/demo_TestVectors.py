@@ -4,7 +4,7 @@
 # Michaël Peeters and Gilles Van Assche. For more information, feedback or
 # questions, please refer to our website: http://keccak.noekeon.org/
 # 
-# Implementation by Renaud Bauvin,
+# Implementation by Renaud Bauvin and Matt Kelly,
 # hereby denoted as "the implementer".
 # 
 # To the extent possible under law, the implementer has waived all copyright
@@ -13,7 +13,8 @@
 
 import sys, os
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/..')
-import Keccak
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + '/../Constructions')
+import KeccakSponge
 
 ## Iterate through the files 'Short... and LongMsgKAT_XXX.txt' containing the
 ## test vectors and compare the computed values to the provided ones
@@ -37,7 +38,7 @@ fileTypes=['Short']
 #fileTypes=['Short', 'Long']
 
 
-#String comparison function (useful later to compare test vector and computation
+#String comparison function (useful later to compare test vector and computation)
 def sameString(string1, string2):
     """Compare 2 strings"""
 
@@ -49,7 +50,7 @@ def sameString(string1, string2):
     return True
 
 #Create an instance
-myKeccak=Keccak.Keccak()
+#myKeccak=Keccak.Keccak()
 
 for instance in instances:
     [suffix, r, c, n] = instance
@@ -79,7 +80,9 @@ for instance in instances:
                     exit()
 
                 # Perform our own computation
-                MD_comp=myKeccak.Keccak((Len,Msg), r, c, n, verbose)
+                #MD_comp=myKeccak.Keccak((Len,Msg), r, c, n, verbose)
+                myKeccak = KeccakSponge.KeccakSponge(r, c, n, verbose)
+                MD_comp = myKeccak.Keccak((Len,Msg),)
 
                 #Compare the results
                 if not sameString(MD_comp,MD_ref):
