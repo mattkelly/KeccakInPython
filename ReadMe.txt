@@ -1,3 +1,16 @@
+Notes
+-------
+
+The original code for this was taken form http://keccak.noekeon.org/
+
+The goal of this modified version is to match the software interface specified here:
+
+    http://keccak.noekeon.org/NoteSoftwareInterface.pdf
+
+I also intend to add, at a minimum, the Duplex mode of operation.
+
+The original README follows.
+
 Content
 -------
 
@@ -86,11 +99,4 @@ Current value of state: Status end of round #24/24
 17136857017974L, 9342009439668884831L, 7004910057750291985L, 1654286879329379778L], [13624874521033984333L, 12479658147685402012L,
  4879704952849025062L, 13293599522548616907L, 8500057116360352059L], [10027350355371872343L, 3500241080921619556L, 140226327413610
 143L, 10105770293752443592L, 16929593379567477321L]]
-
-
-
-
-
-
-
 
