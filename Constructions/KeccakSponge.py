@@ -20,7 +20,7 @@ class KeccakError(Exception):
     """
     Class of error used in the Keccak implementation
 
-    Use: raise KeccakError.KeccakError("Text to be displayed")
+    Use: raise KeccakError("Text to be displayed")
     """
     def __init__(self, value):
         self.value = value
@@ -54,22 +54,18 @@ class KeccakSponge:
 
         #Check the inputs
         if self.b not in [25, 50, 100, 200, 400, 800, 1600]:
-           raise KeccakError.KeccakError('b value not supported - use 25, 50, 100, 200, 400, 800 or 1600')
+            raise KeccakError('b value not supported - use 25, 50, 100, 200, 400, 800 or 1600')
         if (self.r<0) or (self.r%8!=0):
-            raise KeccakError.KeccakError('r must be a multiple of 8 in this implementation')
+            raise KeccakError('r must be a multiple of 8 in this implementation')
         if (self.n%8!=0):
-            raise KeccakError.KeccakError('outputLength must be a multiple of 8')
+            raise KeccakError('outputLength must be a multiple of 8')
 
         if self.verbose:
             print("Create a Keccak function with (r=%d, c=%d (i.e. w=%d))" % (
               self.r, self.c, self.w))
  
-        # Initialisation of state
-        self.S=[[0,0,0,0,0],
-               [0,0,0,0,0],
-               [0,0,0,0,0],
-               [0,0,0,0,0],
-               [0,0,0,0,0]]
+        # Initialization of state
+        self.S = [[0] * 5 for i in range(5)] 
 
     ### Padding rule
 
@@ -86,7 +82,7 @@ class KeccakSponge:
 
         # Check the parameter n
         if n%8!=0:
-            raise KeccakError.KeccakError("n must be a multiple of 8")
+            raise KeccakError("n must be a multiple of 8")
 
         # Check the length of the provided string
         if len(my_string)%2!=0:
@@ -94,7 +90,7 @@ class KeccakSponge:
             #vectors coding)
             my_string=my_string+'0'
         if my_string_length>(len(my_string)//2*8):
-            raise KeccakError.KeccakError("the string is too short to contain the number of bits announced")
+            raise KeccakError("the string is too short to contain the number of bits announced")
 
         nr_bytes_filled=my_string_length//8
         nbr_bits_filled=my_string_length%8
@@ -130,7 +126,7 @@ class KeccakSponge:
 
         #Check that the string has an even number of characters i.e. whole number of bytes
         if len(string)%2!=0:
-            raise KeccakError.KeccakError("The provided string does not end with a full byte")
+            raise KeccakError("The provided string does not end with a full byte")
 
         #Perform the modification
         temp=''
@@ -167,15 +163,11 @@ class KeccakSponge:
         if self.w%8!= 0:
             raise KeccakError("w is not a multiple of 8")
         if len(string)!=2*(self.b)//8:
-            raise KeccakError.KeccakError("String can't be divided in 25 blocks of w bits\
+            raise KeccakError("String can't be divided in 25 blocks of w bits\
             i.e. string must have exactly b bits")
 
         #Convert
-        output=[[0,0,0,0,0],
-                [0,0,0,0,0],
-                [0,0,0,0,0],
-                [0,0,0,0,0],
-                [0,0,0,0,0]]
+        output = [[0] * 5 for i in range(5)] 
         for x in range(5):
             for y in range(5):
                 offset=2*((5*y+x)*self.w)//8
@@ -189,9 +181,9 @@ class KeccakSponge:
 
         #Check input format
         if self.w % 8 != 0:
-            raise KeccakError.KeccakError("w is not a multiple of 8")
+            raise KeccakError("w is not a multiple of 8")
         if (len(table) !=  5) or (False in [len(row) == 5 for row in table]):
-            raise KeccakError.KeccakError("Table must be 5×5")
+            raise KeccakError("Table must be 5×5")
 
         #Convert
         output= [''] * 25
