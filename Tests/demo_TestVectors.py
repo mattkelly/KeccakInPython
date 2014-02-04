@@ -34,8 +34,8 @@ instances=[
     ['384', 832, 768, 384],
     ['512', 576, 1024, 512]
 ]
-fileTypes=['Short']
-#fileTypes=['Short', 'Long']
+#fileTypes=['Short']
+fileTypes=['Short', 'Long']
 
 
 #String comparison function (useful later to compare test vector and computation)

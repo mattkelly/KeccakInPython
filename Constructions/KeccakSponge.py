@@ -30,7 +30,7 @@ class KeccakError(Exception):
 
 class KeccakSponge:
     """
-    Class implementing the Keccak sponge function
+    Class implementing the Keccak sponge construction
     """
 
     def __init__(self, r=1024, c=576, n=1024, verbose=False):
@@ -40,7 +40,7 @@ class KeccakSponge:
         r: bitrate in bits (defautl: 1024)
         c: capacity in bits (default: 576)
         n: length of output in bits (default: 1024),
-        verbose: print the details of computations(default:False)
+        verbose: print the details of computations (default: False)
         """
 
         self.r = r
@@ -61,7 +61,7 @@ class KeccakSponge:
             raise KeccakError('outputLength must be a multiple of 8')
 
         if self.verbose:
-            print("Create a Keccak function with (r=%d, c=%d (i.e. w=%d))" % (
+            print("Create a Keccak sponge with (r=%d, c=%d (i.e. w=%d))" % (
               self.r, self.c, self.w))
  
         # Initialization of state
@@ -223,6 +223,7 @@ class KeccakSponge:
 
         return Z[:2*self.n//8]
 
+    # TODO pass n to this function instead of using instance variable?
     def Keccak(self, M):
         """
         Compute the Keccak[r,c,d] sponge function on message M
@@ -233,7 +234,7 @@ class KeccakSponge:
         P = self.pad10star1(M, self.r)
 
         if self.verbose:
-            print("String ready to be absorbed: %s (will be completed by %d x '00')" % (P, c//8))
+            print("String ready to be absorbed: %s (will be completed by %d x '00')" % (P, self.c//8))
 
         self.absorb(P) 
         return self.squeeze()
