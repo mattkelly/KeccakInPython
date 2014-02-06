@@ -18,7 +18,7 @@ import os
 ## test vectors and compare the computed values to the provided ones
 ## In case of difference, it stops the processing and print a message
 
-dirTestVector=os.path.abspath(os.path.join('.'))
+dirTestVector=os.path.abspath(os.path.join('.') + '/KeccakKAT')
 verbose=False
 instances=[
 #    ['r40c160', 40, 160, 0],
