@@ -11,7 +11,7 @@
 # and related or neighboring rights to the source code in this file.
 # http://creativecommons.org/publicdomain/zero/1.0/
 
-import Keccak
+import KeccakSponge
 import os
 
 ## Iterate through the files 'Short... and LongMsgKAT_XXX.txt' containing the
@@ -35,7 +35,7 @@ fileTypes=['Short']
 #fileTypes=['Short', 'Long']
 
 
-#String comparison function (useful later to compare test vector and computation
+#String comparison function (useful later to compare test vector and computation)
 def sameString(string1, string2):
     """Compare 2 strings"""
 
@@ -47,7 +47,7 @@ def sameString(string1, string2):
     return True
 
 #Create an instance
-myKeccak=Keccak.Keccak()
+myKeccak=KeccakSponge.KeccakSponge()
 
 for instance in instances:
     [suffix, r, c, n] = instance

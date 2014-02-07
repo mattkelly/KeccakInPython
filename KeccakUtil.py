@@ -1,4 +1,14 @@
 # -*- coding: utf-8 -*-
+# The Keccak sponge function, designed by Guido Bertoni, Joan Daemen,
+# Michaël Peeters and Gilles Van Assche. For more information, feedback or
+# questions, please refer to our website: http://keccak.noekeon.org/
+# 
+# Implementation by Renaud Bauvin and Matt Kelly,
+# hereby denoted as "the implementer".
+# 
+# To the extent possible under law, the implementer has waived all copyright
+# and related or neighboring rights to the source code in this file.
+# http://creativecommons.org/publicdomain/zero/1.0/
 
 class KeccakUtil:
 
@@ -98,9 +108,9 @@ class KeccakUtil:
       string: string of bytes of hex-coded bytes (e.g. '9A2C...')"""
 
       #Check that input paramaters
-      if self.w%8!= 0:
+      if self.w % 8 != 0:
           raise KeccakError("w is not a multiple of 8")
-      if len(string)!=2*(self.b)//8:
+      if len(string) != 2 * (self.b) // 8:
           raise KeccakError.KeccakError("string can't be divided in 25 blocks of w bits\
           i.e. string must have exactly b bits")
 
@@ -132,5 +142,4 @@ class KeccakUtil:
               output[5*y+x]=self.fromLaneToHexString(table[x][y])
       output =''.join(output).upper()
       return output
-
 

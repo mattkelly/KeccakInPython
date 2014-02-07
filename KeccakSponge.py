@@ -4,7 +4,7 @@
 # Michaël Peeters and Gilles Van Assche. For more information, feedback or
 # questions, please refer to our website: http://keccak.noekeon.org/
 # 
-# Implementation by Renaud Bauvin,
+# Implementation by Renaud Bauvin and Matt Kelly,
 # hereby denoted as "the implementer".
 # 
 # To the extent possible under law, the implementer has waived all copyright
@@ -25,7 +25,7 @@ class KeccakError(Exception):
         return repr(self.value)
 
 
-class Keccak:
+class KeccakSponge:
     """
     Class implementing the Keccak sponge function
     """
@@ -35,6 +35,12 @@ class Keccak:
         b: parameter b, must be 25, 50, 100, 200, 400, 800 or 1600 (default value)"""
         self.setB(b)
         self.util = KeccakUtil.KeccakUtil(b)
+
+        #returns 'BA594E0FB9EBBD93'
+        print '---'
+        print self.pad10star1([60, 'BA594E0FB9EBBD30'],8) 
+        print '---'
+
 
     def setB(self,b):
         """Set the value of the parameter b (and thus w,l and nr)
@@ -112,56 +118,6 @@ class Keccak:
 
         return A
 
-    ### Padding rule
-
-    def pad10star1(self, M, n):
-        """Pad M with the pad10*1 padding rule to reach a length multiple of r bits
-
-        M: message pair (length in bits, string of hex characters ('9AFC...')
-        n: length in bits (must be a multiple of 8)
-        Example: pad10star1([60, 'BA594E0FB9EBBD30'],8) returns 'BA594E0FB9EBBD93'
-        """
-
-        [my_string_length, my_string]=M
-
-        # Check the parameter n
-        if n%8!=0:
-            raise KeccakError.KeccakError("n must be a multiple of 8")
-
-        # Check the length of the provided string
-        if len(my_string)%2!=0:
-            #Pad with one '0' to reach correct length (don't know test
-            #vectors coding)
-            my_string=my_string+'0'
-        if my_string_length>(len(my_string)//2*8):
-            raise KeccakError.KeccakError("the string is too short to contain the number of bits announced")
-
-        nr_bytes_filled=my_string_length//8
-        nbr_bits_filled=my_string_length%8
-        l = my_string_length % n
-        if ((n-8) <= l <= (n-2)):
-            if (nbr_bits_filled == 0):
-                my_byte = 0
-            else:
-                my_byte=int(my_string[nr_bytes_filled*2:nr_bytes_filled*2+2],16)
-            my_byte=(my_byte>>(8-nbr_bits_filled))
-            my_byte=my_byte+2**(nbr_bits_filled)+2**7
-            my_byte="%02X" % my_byte
-            my_string=my_string[0:nr_bytes_filled*2]+my_byte
-        else:
-            if (nbr_bits_filled == 0):
-                my_byte = 0
-            else:
-                my_byte=int(my_string[nr_bytes_filled*2:nr_bytes_filled*2+2],16)
-            my_byte=(my_byte>>(8-nbr_bits_filled))
-            my_byte=my_byte+2**(nbr_bits_filled)
-            my_byte="%02X" % my_byte
-            my_string=my_string[0:nr_bytes_filled*2]+my_byte
-            while((8*len(my_string)//2)%n < (n-8)):
-                my_string=my_string+'00'
-            my_string = my_string+'80'
-
-        return my_string
 
     def Keccak(self,M,r=1024,c=576,n=1024,verbose=False):
         """Compute the Keccak[r,c,d] sponge function on message M
@@ -174,27 +130,29 @@ class Keccak:
         """
 
         #Check the inputs
-        if (r<0) or (r%8!=0):
-            raise KeccakError.KeccakError('r must be a multiple of 8 in this implementation')
-        if (n%8!=0):
-            raise KeccakError.KeccakError('outputLength must be a multiple of 8')
+        #if (r<0) or (r%8!=0):
+            #raise KeccakError.KeccakError('r must be a multiple of 8 in this implementation')
+        # TODO check sooner
+        if r < 0:
+            raise KeccakError.KeccakError('r must not be negative')
+        #if (n%8!=0):
+            #raise KeccakError.KeccakError('outputLength must be a multiple of 8')
+        # TODO why setB here too?
         self.setB(r+c)
 
         if verbose:
             print("Create a Keccak function with (r=%d, c=%d (i.e. w=%d))" % (r,c,(r+c)//25))
 
         #Compute lane length (in bits)
-        w=(r+c)//25
+        #w=(r+c)//25
 
         # Initialisation of state
-        S=[[0,0,0,0,0],
-           [0,0,0,0,0],
-           [0,0,0,0,0],
-           [0,0,0,0,0],
-           [0,0,0,0,0]]
+        S=[[0] * 5 for i in range(5)]
 
         #Padding of messages
+        print M
         P = self.pad10star1(M, r)
+        print P
 
         if verbose:
             print("String ready to be absorbed: %s (will be completed by %d x '00')" % (P, c//8))
@@ -229,29 +187,91 @@ class Keccak:
 
         return Z[:2*n//8]
 
-class KeccakDuplex:
-    """
-    Class implementing the Keccak duplex construction
-    """
-    def __init__(self, b=1600):
-        """Constructor:
+    ### Padding rule
+    #def pad10star1(self, M, n):
+    #def pad10star1(self, M, r):
+        #"""Pad M with the pad10*1 padding rule to reach a length multiple of r bits
+#
+        #M: message pair (length in bits, string of hex characters ('9AFC...')
+        #n: length in bits
+        #Example: pad10star1([60, 'BA594E0FB9EBBD30'],8) returns 'BA594E0FB9EBBD93'
+        #"""
+#
+        #[my_string_length, my_string] = M
+#
+        #nnn = my_string_length << 3
+#
+        #nrf = nnn >> 3
+        #nbrf = nnn & 7
+        #ll = nnn % r
+#
+        #bbbb = 1 if nbrf == 0 else ((my_string[nrf] >> (8 - nbrf)) | (1 << nbrf))
+#
+        #msg = None
+        #if (r - 8 <= 11) and (ll <= r - 2):
+          #msg = [bbbb ^ 128]
+        #else:
+          #nnn = (nrf + 1) << 3
+          #nnn = ((nnn - (nnn % r) + (r - 8)) >> 3) + 1
+          #msg = [0] * (nnn - nrf)
+          #msg[0] = bbbb
+          #nnn -= nrf
+          #msg[nnn - 1] = 0x80
+#
+        #print msg
+        #print ''.join([str(x) for x in msg])
+        #print str(bytearray(msg))
 
-        b: parameter b, must be 25, 50, 100, 200, 400, 800 or 1600 (default value)"""
-        self.setB(b)
+        #return my_string + msg
+        #return my_string + str(bytearray(msg))
 
-    def setB(self,b):
-        """Set the value of the parameter b (and thus w,l and nr)
+    def pad10star1(self, M, n):
+        """Pad M with the pad10*1 padding rule to reach a length multiple of r bits
 
-        b: parameter b, must be choosen among [25, 50, 100, 200, 400, 800, 1600]
+        M: message pair (length in bits, string of hex characters ('9AFC...')
+        n: length in bits (must be a multiple of 8)
+        Example: pad10star1([60, 'BA594E0FB9EBBD30'],8) returns 'BA594E0FB9EBBD93'
         """
 
-        if b not in [25, 50, 100, 200, 400, 800, 1600]:
-            raise KeccakError.KeccakError('b value not supported - use 25, 50, 100, 200, 400, 800 or 1600')
+        [my_string_length, my_string] = M
 
-        # Update all the parameters based on the used value of b
-        self.b=b
-        self.w=b//25
-        self.l=int(math.log(self.w,2))
-        self.nr=12+2*self.l
+        # Check the parameter n
+        if n % 8!=0:
+            raise KeccakError.KeccakError("n must be a multiple of 8")
+
+        # Check the length of the provided string
+        if len(my_string) % 2!=0:
+            #Pad with one '0' to reach correct length (don't know test
+            #vectors coding)
+            my_string=my_string+'0'
+        if my_string_length > (len(my_string) // 2*8):
+            raise KeccakError.KeccakError("the string is too short to contain the number of bits announced")
+
+        nr_bytes_filled=my_string_length//8
+        nbr_bits_filled=my_string_length%8
+        l = my_string_length % n
+        if ((n-8) <= l <= (n-2)):
+            if (nbr_bits_filled == 0):
+                my_byte = 0
+            else:
+                my_byte=int(my_string[nr_bytes_filled*2:nr_bytes_filled*2+2],16)
+            my_byte=(my_byte>>(8-nbr_bits_filled))
+            my_byte=my_byte+2**(nbr_bits_filled)+2**7
+            my_byte="%02X" % my_byte
+            my_string=my_string[0:nr_bytes_filled*2]+my_byte
+        else:
+            if (nbr_bits_filled == 0):
+                my_byte = 0
+            else:
+                my_byte=int(my_string[nr_bytes_filled*2:nr_bytes_filled*2+2],16)
+            my_byte=(my_byte>>(8-nbr_bits_filled))
+            my_byte=my_byte+2**(nbr_bits_filled)
+            my_byte="%02X" % my_byte
+            my_string=my_string[0:nr_bytes_filled*2]+my_byte
+            while((8*len(my_string)//2)%n < (n-8)):
+                my_string=my_string+'00'
+            my_string = my_string+'80'
+
+        return my_string
 
 

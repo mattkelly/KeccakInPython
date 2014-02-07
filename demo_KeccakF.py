@@ -11,12 +11,13 @@
 # and related or neighboring rights to the source code in this file.
 # http://creativecommons.org/publicdomain/zero/1.0/
 
-import Keccak
+import KeccakSponge
 
 A=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
 
-myKeccak=Keccak.Keccak(1600)
+myKeccak=KeccakSponge.KeccakSponge(1600)
 
 myKeccak.KeccakF(A, True)
 
-myKeccak.printState(A,'Final result')
+# TODO util probably shouldn't be visible from here
+myKeccak.util.printState(A,'Final result')
