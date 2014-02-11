@@ -65,13 +65,9 @@ class KeccakSponge:
         """
 
         #Initialisation of temporary variables
-        B=[[0,0,0,0,0],
-           [0,0,0,0,0],
-           [0,0,0,0,0],
-           [0,0,0,0,0],
-           [0,0,0,0,0]]
-        C= [0,0,0,0,0]
-        D= [0,0,0,0,0]
+        B = [[0] * 5 for i in range(5)]
+        C= [0] * 5
+        D= [0] * 5
 
         #Theta step
         for x in range(5):

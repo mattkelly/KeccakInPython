@@ -56,7 +56,7 @@ Value after squeezing : 038907E89C919CD8F90A7FBC5A88FF9278108DAEF3EBCDA0CEB383E1
 2) Computation of the Keccak-f function on an all-zero state
 
 >>> import Keccak
->>> A=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+>>> A=[[0] * 5] for i in range(5)]
 >>> myKeccak=Keccak.Keccak(1600)
 >>> myKeccak.Keccakf(A, True)
 >>> myKeccak.printState(A,'Final result')

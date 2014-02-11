@@ -115,11 +115,7 @@ class KeccakUtil:
           i.e. string must have exactly b bits")
 
       #Convert
-      output=[[0,0,0,0,0],
-              [0,0,0,0,0],
-              [0,0,0,0,0],
-              [0,0,0,0,0],
-              [0,0,0,0,0]]
+      output = [[0] * 5 for i in range(5)]
       for x in range(5):
           for y in range(5):
               offset=2*((5*y+x)*self.w)//8
