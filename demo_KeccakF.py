@@ -13,7 +13,7 @@
 
 import KeccakSponge
 
-A = [[0] * 5] for i in range(5)]
+A = [[0] * 5 for i in range(5)]
 
 myKeccak=KeccakSponge.KeccakSponge(1600)
 
